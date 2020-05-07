@@ -20,5 +20,9 @@ namespace EmployeeManagement.Controllers
         {
             return "AboutUs() of DepartmentController";
         }
+        public string Index()
+        {
+            return "Index() of DepartmentController";
+        }
     }
 }
