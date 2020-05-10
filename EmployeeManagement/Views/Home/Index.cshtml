@@ -39,20 +39,12 @@
                 <h3>@employee.Name</h3>
             </div>
             <div class="card-body text-center">
-                <img class="card-img-top" src="~/images/diamond.jpg" 
+                <img class="card-img-top" src="~/images/download.jpg" 
                                           asp-append-version="true"/>
             </div>
             <div class="card-footer text-center">
                 <a asp-controller="Home" asp-action="Details" asp-all-route-id="@employee.Id"
-                   class="btn btn-primary">Display </a>
-
-
-               <a href="@Url.Action("Details","Home", new { id=employee.Id})"
-                  class="btn btn-primary">Show</a>
-
-                @Html.ActionLink("View","Details","Home",new { id=employee.Id})
-
-                <a href="/Home/details/@employee.Id" class="btn btn-primary">View</a>
+                   class="btn btn-primary">View</a>
                 <a href="#" class="btn btn-primary">Edit</a>
                 <a href="#" class="btn btn-danger">Delete</a>
             </div>
