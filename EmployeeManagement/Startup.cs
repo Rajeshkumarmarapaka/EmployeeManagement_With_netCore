@@ -21,7 +21,7 @@ namespace EmployeeManagement
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().AddXmlSerializerFormatters();
-            services.AddSingleton<IEmployeeRepository, mockEmployeeRepository>();
+            services.AddTransient<IEmployeeRepository, mockEmployeeRepository>();
             
         }
         public Startup(IConfiguration config)

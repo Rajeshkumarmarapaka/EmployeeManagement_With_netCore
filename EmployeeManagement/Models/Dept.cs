@@ -7,7 +7,6 @@ namespace EmployeeManagement.Models
 {
     public enum Dept
     {
-        Select,
         IT,
         HR,
         Payroll

@@ -9,11 +9,13 @@ namespace EmployeeManagement.Models
     public class Employee
     {
         public int Id { get; set; }
-        [Required]
+        [Required,MaxLength(50,ErrorMessage ="Name cannot exeed 50 character")]
         public string Name { get; set; }
+        [Required, Display(Name = "Office Email")]
         [RegularExpression(@"^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$",
                             ErrorMessage ="Invalid Email Format")]
         public string Email { get; set; }
-        public Dept Department { get; set; }
+        [Required]
+        public Dept? Department { get; set; }
     }
 }

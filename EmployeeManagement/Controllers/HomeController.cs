@@ -52,7 +52,7 @@ namespace EmployeeManagement.Controllers
             if (ModelState.IsValid)
             {
                 Employee newemployee = _employeeRepository.Add(employee);
-                return RedirectToAction("Details", new { id = newemployee.Id });
+                //return RedirectToAction("Details", new { id = newemployee.Id });
             }
             return View();
         }
