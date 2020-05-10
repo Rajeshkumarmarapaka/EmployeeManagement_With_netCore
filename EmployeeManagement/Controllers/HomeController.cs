@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace EmployeeManagement.Controllers
 {
-    //[Route("[controller]")]
+   
     public class HomeController : Controller
     {
         private readonly IEmployeeRepository _employeeRepository;
@@ -19,9 +19,7 @@ namespace EmployeeManagement.Controllers
             _employeeRepository = employeeRepository;
         }
 
-        //[Route("")]
-        //[Route("[action]")]
-        //[Route("~/")]
+        // List All the Employees
         public ViewResult Index()
         {
 
@@ -29,8 +27,8 @@ namespace EmployeeManagement.Controllers
 
             return View(model);
         }
-        //[Route("[action]/{id?}")]
-        public ViewResult Details(int? id,string name)
+        //View the Specific Employee
+        public ViewResult Details(int? id)
         {
             HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel()
             {
@@ -39,11 +37,15 @@ namespace EmployeeManagement.Controllers
             };
             return View(homeDetailsViewModel);
         }
+
+        
         [HttpGet]
         public ViewResult Create()
         {
             return View();
         }
+
+        // Create or Add new Employee
         [HttpPost]
         public IActionResult Create(Employee employee)
         {
