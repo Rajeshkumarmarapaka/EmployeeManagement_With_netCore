@@ -26,7 +26,7 @@ namespace EmployeeManagement.Controllers
         }
         public string xyz()
         {
-            return "Index() of DepartmentController";
+            return "xyz() of DepartmentController";
         }
     }
 }
