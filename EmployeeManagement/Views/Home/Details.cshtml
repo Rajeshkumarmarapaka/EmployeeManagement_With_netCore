@@ -2,13 +2,14 @@
 
 @{
     ViewBag.Title = "Employee Details";
+    var photopath = "~/images/" + (Model.Employee.PhotoPath ?? "default.jpg");
 }
 
 
 <h3>@Model.PageTitle </h3>
 
 
-<!-- Details view without Bootsrap-->
+<!-- Details view without Bootstrap-->
 @*<div>
         Id: @Model.Employee.Id
     </div>
@@ -29,17 +30,16 @@
         <div class="card-header">
             <h1>@Model.Employee.Name</h1>
         </div>
-        <div class="card-body text-center">
-            <img src="~/images/download.jpg" />
-
-
-            <h4>EmployeeID :@Model.Employee.Id</h4>
-            <h4>Email :@Model.Employee.Email</h4>
-            <h4>Department :@Model.Employee.Department</h4>
+        <div class="card-body text-center imagethumbnail">
+            <img src="@photopath" asp-append-version="true" />
+                <h6>EmployeeID:@Model.Employee.Id</h6>
+                <h6>Email:@Model.Employee.Email</h6>
+                <h6>Department:@Model.Employee.Department</h6>
         </div>
         <div class="card-footer text-center">
             <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Back</a>
-            <a href="#" class="btn btn-primary">Edit</a>
+            <a asp-action="Edit"asp-controller="Home"
+               asp-route-id="@Model.Employee.Id" class="btn btn-primary">Edit</a>
             <a href="#" class="btn btn-danger">Delete</a>
         </div>
     </div>

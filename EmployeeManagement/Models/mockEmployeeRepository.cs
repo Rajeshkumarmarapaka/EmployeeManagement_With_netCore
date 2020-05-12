@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace EmployeeManagement.Models
 {
-    public class mockEmployeeRepository : IEmployeeRepository
+    public class MockEmployeeRepository : IEmployeeRepository
     {
-        private List<Employee> _employeeList;
+        private readonly List<Employee> _employeeList;
 
-        public mockEmployeeRepository()
+        public MockEmployeeRepository()
         {
             _employeeList = new List<Employee>()
             {
@@ -41,7 +41,7 @@ namespace EmployeeManagement.Models
             return _employeeList;
         }
 
-        public Employee GetEmployee(int Id)
+        public Employee GetEmployee(int? Id)
         {
             return _employeeList.FirstOrDefault(e => e.Id == Id);
         }
