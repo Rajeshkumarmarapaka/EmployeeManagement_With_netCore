@@ -7,16 +7,17 @@ using EmployeeManagement.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Scaffolding;
 
 namespace EmployeeManagement.Controllers
 {
   
     public class AccountController : Controller
     {
-        private  UserManager<IdentityUser> userManager { get; }
-        private SignInManager<IdentityUser> signInManager { get; }
-        public AccountController(UserManager<IdentityUser> userManager,
-                                 SignInManager<IdentityUser> signInManager)
+        private  UserManager<ApplicationUser> userManager { get; }
+        private SignInManager<ApplicationUser> signInManager { get; }
+        public AccountController(UserManager<ApplicationUser> userManager,
+                                 SignInManager<ApplicationUser> signInManager)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
@@ -35,10 +36,11 @@ namespace EmployeeManagement.Controllers
         {
             if(ModelState.IsValid)
             {
-                var user = new IdentityUser
+                var user = new ApplicationUser
                 {
                     UserName = model.Email,
-                    Email = model.Email
+                    Email = model.Email,
+                    City= model.City
                 };
                 var result = await userManager.CreateAsync(user, model.Password);
 
@@ -55,7 +57,23 @@ namespace EmployeeManagement.Controllers
             return View();
         }
 
-        
+        [AcceptVerbs("Get","Post")]    // same as [HttpPost][HttpGet] combination
+        [AllowAnonymous]
+        public async Task<IActionResult> IsEmailUse(string email)
+        {
+            var user=await userManager.FindByNameAsync(email);
+
+            if(user == null)
+            {
+                return Json(true);
+            }
+            else
+            {
+                return Json($"Email {email} is already in use");
+            }
+        }
+
+
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Login()
@@ -65,7 +83,7 @@ namespace EmployeeManagement.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginViewModel model,string returnUrl)
         {
             if (ModelState.IsValid)
             {
@@ -74,8 +92,16 @@ namespace EmployeeManagement.Controllers
                                                         model.RememberMe, false);
 
                 if (result.Succeeded)
-                {         
-                    return RedirectToAction("Index", "Home");
+                {   
+                    if(!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                    {
+                        return Redirect(returnUrl);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                     
                 }
                 
                  ModelState.AddModelError(string.Empty, "Invalid Login attempt");            
