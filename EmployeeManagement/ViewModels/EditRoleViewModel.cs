@@ -14,6 +14,7 @@ namespace EmployeeManagement.ViewModels
         }
 
         public string Id { get; set; }
+
         [Required(ErrorMessage ="Role Name Required")]
         public string RoleName { get; set; }
 
