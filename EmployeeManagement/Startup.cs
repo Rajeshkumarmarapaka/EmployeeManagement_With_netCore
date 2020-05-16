@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EmployeeManagement.Models;
+using EmployeeManagement.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -41,9 +42,34 @@ namespace EmployeeManagement
                                 .Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
             }).AddXmlSerializerFormatters();
+
+            services.ConfigureApplicationCookie(options => {
+                options.AccessDeniedPath = new PathString("/Administration/AccessDenied");
+            });
+
+            services.AddAuthorization(optins =>
+            {
+                // Claims policy
+                optins.AddPolicy("DeleteRolePolicy",
+                            policy => policy.RequireClaim("Delete Role"));
+
+                optins.AddPolicy("EditRolePolicy",
+                            policy => policy.AddRequirements(new ManageAdminRolesAndClaimsRequirement()));
+                optins.InvokeHandlersAfterFailure = false; 
+
+
+
+                // Roles policy
+                optins.AddPolicy("AdminRolePolicy",
+                            policy => policy.RequireRole("Admin"));            // single Role policy
+                 //policy => policy.RequireRole("Admin","User","TestRole"));    // To Include Multiple Roles in Policy
+            });
             services.AddScoped<IEmployeeRepository, SQLEmployeeRepository>();
-            
-        }
+
+            services.AddSingleton<IAuthorizationHandler, CanEditOnlyOtherAdminRolesAndClaimHandler>();
+            services.AddSingleton<IAuthorizationHandler, SuperAdminHandler>();
+
+        } 
         public Startup(IConfiguration config)
         {
             _config = config;
