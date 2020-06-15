@@ -8,8 +8,8 @@ namespace EmployeeManagement.ViewModels
 {
     public class HomeDetailsViewModel
     {
-        public Employee employee { get; set; }
-        public Employee Employee { get; internal set; }
+        //public Employee employee { get; set; }
+        public Employee Employee { get; set; }
         public string PageTitle { get; set; }
     }
 }

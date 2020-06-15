@@ -45,13 +45,13 @@ namespace EmployeeManagement.Controllers
         public ViewResult Details(int? id)
         {
             //throw new Exception("details exception");
-
             logger.LogTrace("Trace Log");
             logger.LogDebug("Debug Log");
             logger.LogInformation("Information Log");
             logger.LogWarning("Warning Log");
             logger.LogError("Error Log");
             logger.LogCritical("Critical Log");
+
 
             Employee employee = _employeeRepository.GetEmployee(id.Value);
             if(employee == null)
